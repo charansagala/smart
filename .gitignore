@@ -1,0 +1,9 @@
+node_modules/
+.env
+dist/
+*.log
+node-v20.11.1-win-x64/
+node-v20.19.0-win-x64/
+node-lts.zip
+node.zip
+.DS_Store
