@@ -78,8 +78,8 @@ function DestinationForm({ initial = EMPTY_FORM, onSave, onCancel, saving }) {
         formData.append('image', file);
         try {
             const res = await destinationsAPI.uploadImage(formData);
-            if (res.data?.imageUrl) {
-                set('image_url', `http://localhost:5000${res.data.imageUrl}`);
+            if (res?.imageUrl) {
+                set('image_url', `http://localhost:5000${res.imageUrl}`);
             }
         } catch (error) {
             console.error('Upload failed', error);

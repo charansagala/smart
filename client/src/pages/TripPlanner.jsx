@@ -34,7 +34,7 @@ export default function TripPlanner() {
             try {
                 const res = await destinationsAPI.getAll({});
                 setDestinations(res.data);
-            } catch (err) {
+            } catch {
                 setDestinations([
                     { id: 1, name: 'Bali', location: 'Indonesia' },
                     { id: 2, name: 'Kyoto', location: 'Japan' },
@@ -63,8 +63,8 @@ export default function TripPlanner() {
                 setItinerary(res.data.itinerary);
                 setActiveDayIdx(0);
             }
-        } catch (err) {
-            console.error(err);
+        } catch (e) {
+            console.error(e);
             // Fallback local if API fails or backend error
             const mockResult = Array.from({ length: Math.min(parseInt(days), 7) }).map((_, i) => ({
                 day: i + 1,

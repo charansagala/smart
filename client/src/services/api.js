@@ -15,7 +15,7 @@ api.interceptors.request.use(config => {
             if (parsed.token) {
                 config.headers.Authorization = `Bearer ${parsed.token}`;
             }
-        } catch (e) { }
+        } catch { /* no token, skip */ }
     }
     return config;
 }, error => Promise.reject(error));

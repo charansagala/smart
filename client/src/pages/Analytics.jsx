@@ -48,7 +48,7 @@ export default function Analytics() {
                 setSummary(sumRes.data);
                 setPopular(popRes.data);
                 setTrends(trendsRes.data);
-            } catch (err) {
+            } catch {
                 setError('Failed to load dashboard data. Please ensure the backend is running.');
             } finally {
                 setLoading(false);

@@ -1,44 +1,30 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { authAPI } from '@/services/api';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        // Check locally first
+    const [user, setUser] = useState(() => {
         const userInfoString = localStorage.getItem('userInfo');
         if (userInfoString) {
             try {
-                const userInfo = JSON.parse(userInfoString);
-                setUser(userInfo);
-            } catch (err) { }
+                return JSON.parse(userInfoString);
+            } catch { /* invalid JSON, ignore */ }
         }
-        setLoading(false);
-    }, []);
-
+        return null;
+    });
     const login = async (email, password) => {
-        try {
-            const res = await authAPI.login({ email, password });
-            setUser(res.data);
-            localStorage.setItem('userInfo', JSON.stringify(res.data));
-            return res;
-        } catch (err) {
-            throw err;
-        }
+        const res = await authAPI.login({ email, password });
+        setUser(res.data);
+        localStorage.setItem('userInfo', JSON.stringify(res.data));
+        return res;
     };
 
     const register = async (userData) => {
-        try {
-            const res = await authAPI.register(userData);
-            setUser(res.data);
-            localStorage.setItem('userInfo', JSON.stringify(res.data));
-            return res;
-        } catch (err) {
-            throw err;
-        }
+        const res = await authAPI.register(userData);
+        setUser(res.data);
+        localStorage.setItem('userInfo', JSON.stringify(res.data));
+        return res;
     };
 
     const logout = () => {
@@ -47,10 +33,11 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, register, logout, loading }}>
-            {!loading && children}
+        <AuthContext.Provider value={{ user, login, register, logout, loading: false }}>
+            {children}
         </AuthContext.Provider>
     );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => useContext(AuthContext);

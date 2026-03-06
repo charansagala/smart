@@ -244,7 +244,6 @@ export default function Recommendations() {
     const [customDays, setCustomDays] = useState('');
 
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
     const [results, setResults] = useState(null);
     const [submitted, setSubmitted] = useState(false);
 
@@ -311,7 +310,6 @@ export default function Recommendations() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setError(null);
         setResults(null);
         setSubmitted(true);
 
@@ -332,7 +330,7 @@ export default function Recommendations() {
 
     const handleReset = () => {
         setSelectedCats([]); setSeason(''); setBudget(''); setDays(''); setCustomDays('');
-        setResults(null); setSubmitted(false); setError(null);
+        setResults(null); setSubmitted(false);
     };
 
     return (
